@@ -31,8 +31,9 @@ Song.record 'turkish_march' do
     bar(9).notes          {e4}  
   end
 
-#   Reader.new("turkish_march.wav").each_buffer do |buffer|
-#     puts "Read #{buffer.samples.length} sample frames."
-#   end
+  
+  Reader.new("turkish_march.wav").each_buffer do |buffer|
+    puts "Read #{buffer.samples.length} sample frames."
+  end
 
   titleMusic = fork{ exec 'afplay', "./turkish_march.wav" }

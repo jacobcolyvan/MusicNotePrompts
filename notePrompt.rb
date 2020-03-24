@@ -4,19 +4,15 @@ require 'muse'
 include Muse
 
 
-
 notesHash = {
     0=>"a", 1 => "a#", 2=> "b", 3 => "c", 4=>"c#", 5=>"d", 
     6=>"d#", 7=>"e", 8=>"f", 9=>"f#", 10=>"g", 11=>"g#"
 }
 $prompt = TTY::Prompt.new
 
-
-
 def musicTable(notesHash)
     howManyNotes = $prompt.ask("Pass me how many notes you want:  ").to_i
     $notes = []
-
 
     for i in 1..howManyNotes 
         seed = rand(12)
@@ -29,8 +25,11 @@ def musicTable(notesHash)
 end
 
 puts musicTable(notesHash)
-# p $notes
 
+
+
+### Convert array of notes into muse compatible string
+# p $notes
 # songBar = ""
 
 # for i in 0..$notes.length-1
@@ -41,7 +40,11 @@ puts musicTable(notesHash)
 # end
 # songBar << ""
 # puts songBar
-# # stack = proc { do_this }
+
+
+### NOTE: muse does not accept string as argument.
+###       testing w/ procs.
+###       May need to change gem core files to get working. 
 # $bar = Proc.new  { b4; a4; gis4; a4; } 
 
 # Song.record 'promptSong' do
