@@ -28,9 +28,14 @@ puts musicTable(notesHash)
 
 
 
-### Convert array of notes into muse compatible string
+
+
+
+
+# ##### NOTE: (failed) attempts to make notes turn into a song.
+# ## Convert array of notes into muse compatible string
 # p $notes
-# songBar = ""
+# songBar = "{ "
 
 # for i in 0..$notes.length-1
 #     if $notes[i].include?("#")
@@ -38,19 +43,27 @@ puts musicTable(notesHash)
 #     end
 #     songBar << $notes[i]+"4; "
 # end
-# songBar << ""
+# songBar << "}"
+
 # puts songBar
 
 
-### NOTE: muse does not accept string as argument.
-###       testing w/ procs.
-###       May need to change gem core files to get working. 
-# $bar = Proc.new  { b4; a4; gis4; a4; } 
+# # NOTE: muse does not accept string as argument.
+# #       testing w/ procs.
+# ##       May need to change gem core files to get working. 
+# # $bar =  { b4; a4; gis4; a4; } 
+# l = "b"
 
 # Song.record 'promptSong' do
-#     bar(1,b:0.25, bpm:50).notes (&$bar)
+#     bar(1,b:0.25, bpm:50).notes songBar
 # end
 # titleMusic = fork{ exec 'afplay', "./promptSong.wav" }
+
+
+
+
+
+
 
 
 
