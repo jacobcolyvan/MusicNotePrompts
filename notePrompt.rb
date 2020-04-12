@@ -11,6 +11,14 @@ $chordHash = {
     0 => "maj", 1 => "min", 2=>"maj7", 3=>"min7", 4=>"dom", 5=>"dim"
 }
 
+#NOTE: yet to be implemented functionality.
+#scale template that gives us chord types, and interval positions
+$majScaleTemplate = 
+    "I"=>2, "ii"=>2, "iii"=>2, "IV"=>1, "V"=>2, "vi"=> 2, "vii"=>1
+}
+$minorScales = ["Natural", "Harmonic", "Melodic"]
+
+
 
 #main functions (usermenu)
 def notePrompt()
@@ -25,6 +33,7 @@ def notePrompt()
     userMenu()
 end
 def scalePrompt() 
+    #NOTE: can add mode functionality
     scale = $notesHash[rand(12)]+$chordHash[rand(2)]
     puts makeTable([scale])
 
@@ -60,6 +69,7 @@ def userMenu()
     command = $prompt.select(" Choose menu \n", options)
     self.send(command)
 end
+
 
 
 userMenu()
