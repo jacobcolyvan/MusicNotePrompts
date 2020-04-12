@@ -1,69 +1,65 @@
 require 'tty-prompt'
 require 'terminal-table'
-require 'muse'
-include Muse
 
-
-notesHash = {
+#global inputs
+$prompt = TTY::Prompt.new
+$notesHash = {
     0=>"a", 1 => "a#", 2=> "b", 3 => "c", 4=>"c#", 5=>"d", 
     6=>"d#", 7=>"e", 8=>"f", 9=>"f#", 10=>"g", 11=>"g#"
 }
-$prompt = TTY::Prompt.new
+$chordHash = {
+    0 => "maj", 1 => "min", 2=>"maj7", 3=>"min7", 4=>"dom", 5=>"dim"
+}
 
-def musicTable(notesHash)
-    howManyNotes = $prompt.ask("Pass me how many notes you want:  ").to_i
-    $notes = []
 
-    for i in 1..howManyNotes 
-        seed = rand(12)
-        $notes.push(notesHash[seed])
+#main functions (usermenu)
+def notePrompt()
+    notes = []
+    notesAmount = promptForAmount("notes")
+
+    for i in 1..notesAmount 
+        notes.push($notesHash[rand(12)])
     end
 
-    rows = []
-    rows << $notes
-    return Terminal::Table.new :rows => rows
+    puts makeTable(notes)
+    userMenu()
+end
+def scalePrompt() 
+    scale = $notesHash[rand(12)]+$chordHash[rand(2)]
+    puts makeTable([scale])
+
+    userMenu()
+end
+def chordPrompt()
+    chords = []
+    chordsAmount = promptForAmount("chords")
+
+    for i in 1..chordsAmount 
+        chords.push($notesHash[rand(12)].to_s+"/"+$chordHash[rand(6)].to_s)
+    end
+
+    puts makeTable(chords)
+    userMenu
 end
 
-puts musicTable(notesHash)
+
+#global functions
+def promptForAmount(type)
+    howMany = $prompt.ask("Pass me how many #{type} you want:  ").to_i
+end
+def makeTable(tableData)
+    rows = [] 
+    rows << tableData
+    Terminal::Table.new :rows => rows
+end
 
 
+#user menu
+def userMenu()
+    options = {"Note Prompt"=>"notePrompt", "Scale Prompt"=>"scalePrompt", "Chord Prompt"=>"chordPrompt", "Exit"=>"exit"}
+    command = $prompt.select(" Choose menu \n", options)
+    self.send(command)
+end
 
 
-
-
-
-# ##### NOTE: (failed) attempts to make notes turn into a song.
-# ## Convert array of notes into muse compatible string
-# p $notes
-# songBar = "{ "
-
-# for i in 0..$notes.length-1
-#     if $notes[i].include?("#")
-#         $notes[i] = $notes[i][0]+ "is"
-#     end
-#     songBar << $notes[i]+"4; "
-# end
-# songBar << "}"
-
-# puts songBar
-
-
-# # NOTE: muse does not accept string as argument.
-# #       testing w/ procs.
-# ##       May need to change gem core files to get working. 
-# # $bar =  { b4; a4; gis4; a4; } 
-# l = "b"
-
-# Song.record 'promptSong' do
-#     bar(1,b:0.25, bpm:50).notes songBar
-# end
-# titleMusic = fork{ exec 'afplay', "./promptSong.wav" }
-
-
-
-
-
-
-
-
-
+userMenu()
