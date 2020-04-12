@@ -1,8 +1,8 @@
 require 'tty-prompt'
 require 'terminal-table'
 
-#global inputs
-$prompt = TTY::Prompt.new
+#NOTE: could add save functionality
+#function data
 $notesHash = {
     0=>"a", 1 => "a#", 2=> "b", 3 => "c", 4=>"c#", 5=>"d", 
     6=>"d#", 7=>"e", 8=>"f", 9=>"f#", 10=>"g", 11=>"g#"
@@ -13,14 +13,14 @@ $chordHash = {
 
 #NOTE: yet to be implemented functionality.
 #scale template that gives us chord types, and interval positions
-$majScaleTemplate = 
+$majScaleTemplate = {
     "I"=>2, "ii"=>2, "iii"=>2, "IV"=>1, "V"=>2, "vi"=> 2, "vii"=>1
 }
 $minorScales = ["Natural", "Harmonic", "Melodic"]
 
 
 
-#main functions (usermenu)
+#functions that implement program logic
 def notePrompt()
     notes = []
     notesAmount = promptForAmount("notes")
@@ -52,24 +52,3 @@ def chordPrompt()
 end
 
 
-#global functions
-def promptForAmount(type)
-    howMany = $prompt.ask("Pass me how many #{type} you want:  ").to_i
-end
-def makeTable(tableData)
-    rows = [] 
-    rows << tableData
-    Terminal::Table.new :rows => rows
-end
-
-
-#user menu
-def userMenu()
-    options = {"Note Prompt"=>"notePrompt", "Scale Prompt"=>"scalePrompt", "Chord Prompt"=>"chordPrompt", "Exit"=>"exit"}
-    command = $prompt.select(" Choose menu \n", options)
-    self.send(command)
-end
-
-
-
-userMenu()
